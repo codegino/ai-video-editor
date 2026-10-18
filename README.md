@@ -46,13 +46,23 @@ input/              your raw videos (top level)
   images/           screenshots, photos
   audio/            music and sound effects
 output/             drafts, finals and subtitles (results only, never reused as input)
-profile/            you: style, rules, vocabulary, intro, outro, logo
+profile/            you: style, rules, vocabulary, intro, outro, logo (the active profile)
+profiles/           your saved profiles, one folder each (managed for you)
 profile.example/    templates for every profile file
 engine/             the editing engine, installed by setup (do not edit)
-tools/              transcription scripts
+tools/              transcription and profile scripts
 ```
 
-`input/`, `output/`, `profile/` and `.env` stay on your computer and are never committed.
+`input/`, `output/`, `profile/`, `profiles/` and `.env` stay on your computer and are never committed.
+
+### Profiles
+
+Keep as many profiles as you like, for example one per brand, or a portrait one and
+a landscape one. Just ask: "what profiles do I have", "make a landscape version of
+this", "switch to my cooking profile", "rename it", "delete the old one". Changes are
+saved automatically, and deleted profiles go to a trash you can restore from. Under
+the hood the agent uses `node tools/profile.mjs` (run it with `help` to see the
+commands).
 
 ### Intro and outro
 

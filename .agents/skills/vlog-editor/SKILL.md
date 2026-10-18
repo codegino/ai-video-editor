@@ -25,7 +25,9 @@ otherwise, run commands from the repo root.
 | `profile/vocabulary.md` | Names and terms that improve transcription spelling. |
 | `profile/intro.md`, `profile/outro.md` | Optional opening and closing segments. |
 | `profile/` (other files) | Brand assets: logo, intro/outro clips, stings. |
+| `profile/about.md` | One-line description of this profile (brand, format, use). |
 | `profile.example/` | Templates showing the format of each profile file. |
+| `profiles/`, `tools/profile.mjs` | Saved profiles and the script that switches them. See **Profiles**. |
 | `engine/` | Herk Edit Kit, installed by setup. **Never modify it.** |
 
 The engine has its own guide (`engine/AGENTS.md`) and skills under
@@ -40,7 +42,8 @@ Setup and Groq calls need the internet. If your sandbox blocks network access
 - **Never use anything in `output/` as source material.** Every new version is
   rebuilt from the original in `input/` and the project in
   `engine/video-projects/<slug>/`, never by re-editing an earlier render.
-- Never modify or delete the user's originals in `input/` or `profile/`.
+- Never modify or delete the user's originals in `input/` or `profile/`. Saving,
+  switching and deleting profiles goes only through `tools/profile.mjs`.
 - Engine features like AI-generated visuals, screen captures and drawn graphics
   are allowed. Anything that **costs money or uploads the user's media** (Kie.ai,
   ElevenLabs, any paid API) needs a yes from the user first. Groq transcription is
@@ -65,7 +68,8 @@ Setup and Groq calls need the internet. If your sandbox blocks network access
      the model.
 3. Open `output/setup-test.mp4` for them (`open` on macOS, `start ""` on Windows,
    `xdg-open` on Linux).
-4. If `profile/style.md` is missing, run **profile setup** below.
+4. If `profile/style.md` is missing, run **profile setup** below. (If the user just
+   created a blank profile with the profile-manager skill, skip steps 1–3.)
 5. Close with: "Put a video in the input folder (or drag it here) and say: edit this."
 
 ## Profile setup
@@ -112,6 +116,22 @@ the caption style (and the intro, if generated) on their own footage. Show it an
 adjust before saving. Write `profile/style.md` as short bullets in the user's own
 words where they gave them.
 
+**Name it.** If `node tools/profile.mjs current` shows no saved profile, ask: "Name
+this profile? (default: `default`)" and run `node tools/profile.mjs save <name>`.
+Then `describe` it in one line (brand, format, use), e.g. "My channel, vertical
+9:16, Reels and Shorts". Otherwise just run `node tools/profile.mjs save`.
+
+## Profiles
+
+The user can keep several complete profiles (per brand, format, or anything else).
+Everything about listing, switching, creating, renaming, deleting and restoring
+them is in the **profile-manager** skill at `.agents/skills/profile-manager/SKILL.md`.
+Read it when the user talks about profiles. Two rules apply everywhere:
+
+- **After writing any file in `profile/`** (style, rules, intro, outro, vocabulary,
+  brand assets), run `node tools/profile.mjs save`.
+- **Never copy, move or delete profile folders yourself.**
+
 ## Intro and outro
 
 `profile/intro.md` and `profile/outro.md` each describe one segment in plain words.
@@ -145,7 +165,12 @@ approval between steps. Only stop to ask about paid or uploading services.
    `node tools/transcribe.mjs engine/video-projects/<slug>/assets/raw.mp4`
    (add `--local` if `.env` has no Groq key). This produces `raw.json` and takes the
    place of the engine's ElevenLabs step.
-4. **Load preferences.** Read `profile/style.md`, `profile/rules.md`, and the intro
+4. **Load preferences.** Run `node tools/profile.mjs list` and tell the user in one
+   line which profile you are using ("Editing with profile `default`."). If the
+   request clearly fits another profile better (for example, a YouTube or
+   horizontal cut while the active profile is vertical, judged from the `about`
+   lines), ask "Switch to `<name>` for this?" and switch only on a yes. Never
+   switch silently. Then read `profile/style.md`, `profile/rules.md`, and the intro
    and outro files if they exist. Priority: rules > style > engine house style.
 5. **Edit.** Read `engine/AGENTS.md`, then follow the engine skill `short-form-edit`
    for vertical or short videos (under about 3 minutes) or `edit-video` for long
@@ -166,6 +191,7 @@ approval between steps. Only stop to ask about paid or uploading services.
   note comes twice), add it to `profile/rules.md`: one line with the rule, the user's
   exact words, and the date. Confirm with: "Saved as a rule: …".
 - Changes to intro, outro or vocabulary go into those profile files, not rules.
+- After any of these profile writes, run `node tools/profile.mjs save`.
 - Never write preferences into `engine/`; setup can replace it.
 - On approval ("approved", "final"), render at final quality to
   `output/<slug>-final.mp4`.
@@ -176,4 +202,4 @@ approval between steps. Only stop to ask about paid or uploading services.
 
 - Post, upload or send a video anywhere.
 - Print, log or ask for the Groq key.
-- Commit anything in `input/`, `output/`, `profile/`, or `.env`.
+- Commit anything in `input/`, `output/`, `profile/`, `profiles/`, or `.env`.
