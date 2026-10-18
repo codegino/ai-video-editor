@@ -1,0 +1,21 @@
+# Installed by setup.mjs
+engine/
+node_modules/
+
+# Personal and local: footage, results, profile, secrets
+.env
+input/**
+!input/**/
+!input/**/.gitkeep
+output/*
+!output/.gitkeep
+profile/
+*.transcribe.mp3
+
+# OS and sync clutter
+.DS_Store
+Thumbs.db
+__pycache__/
+*.sync-conflict-*
+.stfolder/
+.stversions/
