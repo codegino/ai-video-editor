@@ -14,8 +14,15 @@ handles non-English and mixed-language speech well. A fully local option is ther
 
 ## Setup
 
-1. Clone this repo and open the folder in your agent.
-2. Type **`start`**.
+Paste this into your agent:
+
+```
+Clone https://github.com/codegino/ai-vlog-editor into a folder called ai-vlog-editor,
+move into it, read AGENTS.md and .agents/skills/vlog-editor/SKILL.md,
+then run the skill's first-time setup ("start").
+```
+
+Or do it by hand: clone this repo, open the folder in your agent, and type **`start`**.
 
 The agent checks your tools, installs the editing engine, renders a test clip, helps you
 pick a transcription route, and asks a few questions to build your profile: format,
