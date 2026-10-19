@@ -1,4 +1,4 @@
-# ai-vlog-editor
+# ai-video-editor
 
 Your own AI video editor, living inside the coding agent you already use (Claude Code,
 Codex, Cursor, Gemini CLI, GitHub Copilot, Windsurf, or anything that reads
@@ -17,8 +17,8 @@ handles non-English and mixed-language speech well. A fully local option is ther
 Paste this into your agent:
 
 ```
-Clone https://github.com/codegino/ai-vlog-editor into a folder called ai-vlog-editor,
-move into it, read AGENTS.md and .agents/skills/vlog-editor/SKILL.md,
+Clone https://github.com/codegino/ai-video-editor into a folder called ai-video-editor,
+move into it, read AGENTS.md and .agents/skills/video-editor/SKILL.md,
 then run the skill's first-time setup ("start").
 ```
 
@@ -28,12 +28,12 @@ The agent checks your tools, installs the editing engine, renders a test clip, h
 pick a transcription route, and asks a few questions to build your profile: format,
 captions, pace, an optional intro and outro, and words Whisper should spell your way.
 
-Open your agent in this folder from then on so it finds the `vlog-editor` skill.
+Open your agent in this folder from then on so it finds the `video-editor` skill.
 
 ## Editing
 
 1. Put a video in `input/`, or drag it into the chat.
-2. Say **"edit this"** (or `/vlog-editor`, or `$vlog-editor` in Codex).
+2. Say **"edit this"** (or `/video-editor`, or `$video-editor` in Codex).
 3. Watch the draft in `output/`, give notes, repeat. Say **"final"** when done.
 
 Want a YouTube version? Ask for horizontal. It gets its own framing, not a crop.

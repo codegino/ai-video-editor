@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * First-run installer for the vlog editor. Re-running it is harmless.
+ * First-run installer for the video editor. Re-running it is harmless.
  *
  * What it does, in order:
  *   1. Confirms Node 22+, Git, FFmpeg and FFprobe are on PATH.

@@ -1,6 +1,6 @@
 ---
 name: profile-manager
-description: Manage the user's editing profiles in this repo (style, rules, vocabulary, intro, outro, branding as one bundle). Use when the user wants to list, check, save, switch, create, copy, rename, describe, delete, or restore a profile, or empty the profile trash, e.g. "what profiles do I have", "switch to my landscape profile", "make a landscape version of this", "new profile for my cooking channel", "delete the old one", "bring it back". Also used by vlog-editor to save after profile edits and to pick the right profile for an edit.
+description: Manage the user's editing profiles in this repo (style, rules, vocabulary, intro, outro, branding as one bundle). Use when the user wants to list, check, save, switch, create, copy, rename, describe, delete, or restore a profile, or empty the profile trash, e.g. "what profiles do I have", "switch to my landscape profile", "make a landscape version of this", "new profile for my cooking channel", "delete the old one", "bring it back". Also used by video-editor to save after profile edits and to pick the right profile for an edit.
 ---
 
 # profile-manager
@@ -13,7 +13,7 @@ commands or folders below.
 
 | Path | Purpose |
 | --- | --- |
-| `profile/` | The **active** profile. Everything else (vlog-editor, `tools/transcribe.mjs`) reads only this. |
+| `profile/` | The **active** profile. Everything else (video-editor, `tools/transcribe.mjs`) reads only this. |
 | `profile/.profile-name` | Marker: which saved profile is active. Never edit it by hand. |
 | `profile/about.md` | One-line description of the profile, used to pick the right one. |
 | `profiles/<name>/` | The library: one folder per saved profile. |
@@ -59,7 +59,7 @@ Decide from context and confirm when unclear ("Start from scratch, or copy
   brand with a different look): `new <name> --from <current>`, then change only what
   differs. For example, update the format in `profile/style.md`.
 - **A new brand or channel**: `new <name>` (blank), then run **Profile setup** from
-  the vlog-editor skill. Do not rerun `setup.mjs`.
+  the video-editor skill. Do not rerun `setup.mjs`.
 
 Afterwards, always `describe` the new profile in one line covering brand, format and
 use, e.g. "Brand X, horizontal 16:9, YouTube long-form". Suggest the text and let
