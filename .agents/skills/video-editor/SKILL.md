@@ -15,6 +15,7 @@ otherwise, run commands from the repo root.
 | --- | --- |
 | `setup.mjs` | First-run installer. Safe to run again. |
 | `tools/transcribe.mjs` | Word-timed transcription: Groq by default, `--local` for faster-whisper. |
+| `tools/cues.mjs` | Finds spoken "Direk AI" commands in a transcript. See **Direk AI commands**. |
 | `tools/inputs.mjs` | Lists what is in `input/`: kind, length, orientation, recording time, whether used. |
 | `input/` | One flat folder for everything: recordings, b-roll, images, music, effects. Subfolders are optional; their names are only hints. |
 | `output/` | Results only: `<slug>-v1.mp4`, `<slug>-final.mp4`, `.srt`. **Write-only.** |
@@ -167,14 +168,17 @@ approval between steps. Only stop to ask about paid or uploading services.
 3. **Transcribe.** From the repo root:
    `node tools/transcribe.mjs engine/video-projects/<slug>/assets/raw.mp4`
    (add `--local` if `.env` has no Groq key). This produces `raw.json` and takes the
-   place of the engine's ElevenLabs step.
+   place of the engine's ElevenLabs step. Then run
+   `node tools/cues.mjs engine/video-projects/<slug>/assets/raw.json` and handle any
+   commands as **Direk AI commands** below describes.
 4. **Load preferences.** Run `node tools/profile.mjs list` and tell the user in one
    line which profile you are using ("Editing with profile `default`."). If the
    request clearly fits another profile better (for example, a YouTube or
    horizontal cut while the active profile is vertical, judged from the `about`
    lines), ask "Switch to `<name>` for this?" and switch only on a yes. Never
    switch silently. Then read `profile/style.md`, `profile/rules.md`, and the intro
-   and outro files if they exist. Priority: rules > style > engine house style.
+   and outro files if they exist. Priority: chat notes > spoken Direk AI commands >
+   rules > style > engine house style.
 5. **Edit.** Read `engine/AGENTS.md`, then follow the engine skill `short-form-edit`
    for vertical or short videos (under about 3 minutes) or `edit-video` for long
    horizontal ones.
@@ -188,7 +192,36 @@ approval between steps. Only stop to ask about paid or uploading services.
    - Add any b-roll, images or audio you used to `sources.json`.
 6. **Deliver.** Render a draft to `output/<slug>-v1.mp4` with a matching `.srt`. Open
    it. Summarize what you did in 3–5 short bullets, including which clips and
-   assets were used or dropped, and ask for notes.
+   assets were used or dropped, and ask for notes. If there were Direk AI commands,
+   add a short list: time, what was said, what you did (or that you skipped it as
+   normal speech).
+
+## Direk AI commands
+
+While recording, the user can talk to you by saying **"Direk AI"** followed by an
+instruction in any words or language, e.g. "Direk AI, cut that, I'll say it
+again", "Direk AI, put a title card at the bottom", "Direk AI, show the beach
+clip in the upper right".
+
+- **Find them** with `tools/cues.mjs` (step 3). It lists each command with its
+  time, about 10 s of context on each side, and the range to cut. Cues marked
+  "heard differently" may be ordinary speech: judge from context and skip ones
+  that are not instructions to you.
+- **Treat each one like a chat instruction**, tied to that moment. Read it in
+  context: "cut that, I'll say it again" is about what came just before (work out
+  where the mistake starts, usually where the retake repeats it); "put a card" is
+  about what comes just after. If the user describes the content, build exactly
+  that; otherwise infer it from what they say. Use your normal editing abilities;
+  there is no fixed command list.
+- **Always cut the command itself** (the `cut` range: wake phrase, instruction and
+  the pauses around it), even when you skip or can't do the instruction.
+- **Ask only when you truly can't infer** what the user meant. Collect every such
+  command into **one** message before rendering (time + what they said + your best
+  guess), wait for the answer, then continue. If everything is clear, don't pause.
+  Paid or uploading services still need approval as usual.
+- **Scope:** a spoken command applies to that video and moment only. Chat notes on
+  a draft override it. Save it as a rule only if the user says so ("always",
+  "from now on", or the same in their language), following **Notes and rules**.
 
 ## Reading input/
 
