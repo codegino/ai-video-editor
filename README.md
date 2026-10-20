@@ -32,7 +32,9 @@ Open your agent in this folder from then on so it finds the `video-editor` skill
 
 ## Editing
 
-1. Put a video in `input/`, or drag it into the chat.
+1. Put a video in `input/`, or drag it into the chat. Several clips are fine: they
+   are joined in recording order, retakes are dropped, and extra clips, images and
+   audio are used where they fit. No subfolders needed.
 2. Say **"edit this"** (or `/video-editor`, or `$video-editor` in Codex).
 3. Watch the draft in `output/`, give notes, repeat. Say **"final"** when done.
 
@@ -41,16 +43,13 @@ Want a YouTube version? Ask for horizontal. It gets its own framing, not a crop.
 ## Folders
 
 ```
-input/              your raw videos (top level)
-  b-roll/           extra clips to cut in, matched to what you say
-  images/           screenshots, photos
-  audio/            music and sound effects
+input/              everything you film or want used: videos, b-roll, images, music, effects
 output/             drafts, finals and subtitles (results only, never reused as input)
 profile/            you: style, rules, vocabulary, intro, outro, logo (the active profile)
 profiles/           your saved profiles, one folder each (managed for you)
 profile.example/    templates for every profile file
 engine/             the editing engine, installed by setup (do not edit)
-tools/              transcription and profile scripts
+tools/              transcription, input listing and profile scripts
 ```
 
 `input/`, `output/`, `profile/`, `profiles/` and `.env` stay on your computer and are never committed.

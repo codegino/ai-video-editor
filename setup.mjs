@@ -98,7 +98,7 @@ exec('npm', ['run', 'setup', '--silent'], { cwd: ENGINE });
 
 // 4. Test render -----------------------------------------------------------
 heading('Test render');
-for (const dir of ['input/b-roll', 'input/images', 'input/audio', 'output', 'profile']) {
+for (const dir of ['input', 'output', 'profile']) {
   mkdirSync(join(ROOT, dir), { recursive: true });
 }
 const demoDir = join(ENGINE, 'video-projects', 'demo');

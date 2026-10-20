@@ -15,10 +15,8 @@ otherwise, run commands from the repo root.
 | --- | --- |
 | `setup.mjs` | First-run installer. Safe to run again. |
 | `tools/transcribe.mjs` | Word-timed transcription: Groq by default, `--local` for faster-whisper. |
-| `input/` | Main videos to edit go at the top level. |
-| `input/b-roll/` | Extra clips to cut in. Shared by every edit. |
-| `input/images/` | Screenshots, photos, graphics for the current work. Shared. |
-| `input/audio/` | Music and sound effects. Shared. |
+| `tools/inputs.mjs` | Lists what is in `input/`: kind, length, orientation, recording time, whether used. |
+| `input/` | One flat folder for everything: recordings, b-roll, images, music, effects. Subfolders are optional; their names are only hints. |
 | `output/` | Results only: `<slug>-v1.mp4`, `<slug>-final.mp4`, `.srt`. **Write-only.** |
 | `profile/style.md` | The user's look and feel, written by style setup. |
 | `profile/rules.md` | Lasting rules learned from their notes. |
@@ -98,7 +96,7 @@ recommended option. Use `profile.example/` as the template for every file you wr
    such as "Follow for more"), whether to use a logo (ask them to put it in
    `profile/`), and length: 1–2 s (recommended for short-form), 3–5 s, or custom.
    If they have a clip: ask them to put it in `profile/` and note the file name.
-3. Sound: none, a sting file (in `profile/` or `input/audio/`), or a simple
+3. Sound: none, a sting file (in `profile/` or `input/`), or a simple
    generated whoosh.
 4. When to use: every video, horizontal/YouTube only (recommended for intros), or
    only videos longer than N seconds.
@@ -153,14 +151,19 @@ The request approves the full local pipeline: transcription with the configured
 route, silence and mistake cuts, design, preview and draft render. Do not pause for
 approval between steps. Only stop to ask about paid or uploading services.
 
-1. **Pick the source.** Use the path in the message. Otherwise use the newest video
-   at the top level of `input/` with no matching render in `output/`. Only check
-   `output/` to see what is done; never read media from it. If the user attached a
-   video but you cannot see a path, ask them to put it in `input/`. Slug: file name
-   plus today's date, lowercase kebab-case.
-2. **Make the project.** From `engine/`: `npm run new-video -- <slug>`. Copy the source
-   to `engine/video-projects/<slug>/assets/raw.mp4` (transcode with ffmpeg if it is
-   not MP4).
+1. **Pick the sources.** See **Reading input/** below. If the user attached a video
+   but you cannot see a path, ask them to put it in `input/`. Never read media from
+   `output/`. Slug: first main clip's file name plus today's date, lowercase
+   kebab-case.
+2. **Make the project.** From `engine/`: `npm run new-video -- <slug>`. Write
+   `engine/video-projects/<slug>/sources.json` (format in `tools/inputs.mjs`) listing
+   every input file used, its role and, for main clips, the order. Build
+   `engine/video-projects/<slug>/assets/raw.mp4`:
+   - One main clip: copy it (transcode with ffmpeg if it is not MP4).
+   - Several: normalize each to the same resolution, frame rate and audio format,
+     then join them in order with ffmpeg. Fit clips that don't match the profile's
+     format: crop talking-head footage to the face; put screen recordings over a
+     blurred fill so nothing is cut off.
 3. **Transcribe.** From the repo root:
    `node tools/transcribe.mjs engine/video-projects/<slug>/assets/raw.mp4`
    (add `--local` if `.env` has no Groq key). This produces `raw.json` and takes the
@@ -175,13 +178,60 @@ approval between steps. Only stop to ask about paid or uploading services.
 5. **Edit.** Read `engine/AGENTS.md`, then follow the engine skill `short-form-edit`
    for vertical or short videos (under about 3 minutes) or `edit-video` for long
    horizontal ones.
-   - B-roll: the engine matches clips in `input/b-roll/` to what is said. Descriptive
-     file names help. Follow any chat instruction about which clip goes where.
-   - Images: `input/images/`. Music and effects: `input/audio/`. If it is empty, use
-     simple generated effects or none, as the style says.
+   - B-roll and images: use a clip or image from `input/` only when it matches what
+     is said (by file name or content) or the user asked for it. Follow any chat
+     instruction about which clip goes where. Old assets that don't fit this video
+     stay out.
+   - Music and effects: audio files in `input/`, picked per the style. If there are
+     none, use simple generated effects or none, as the style says.
    - Add the intro and outro per the rules above.
+   - Add any b-roll, images or audio you used to `sources.json`.
 6. **Deliver.** Render a draft to `output/<slug>-v1.mp4` with a matching `.srt`. Open
-   it. Summarize what you did in 3–5 short bullets and ask for notes.
+   it. Summarize what you did in 3–5 short bullets, including which clips and
+   assets were used or dropped, and ask for notes.
+
+## Reading input/
+
+`input/` is one flat folder. Never ask the user to sort files into subfolders; work
+out what each file is. Run `node tools/inputs.mjs` (add `--all` to see used clips).
+
+- **Kinds** come from the file type. Audio length suggests the use: up to about 3 s
+  is an effect, about 3–30 s a sting, longer is music. File names override this.
+- **Shared vs used.** B-roll, images and audio stay available to every edit and
+  keep the role they had before (`was …` in the list). A video becomes **used**
+  once a project lists it as a main clip (or older projects were built from it).
+  The batch for a new edit is the **new** videos.
+- **Explicit instructions win.** If the message names files, order or roles, use
+  exactly that. Skip inference and questions.
+
+**Roles.** All new videos in the batch belong to **one edit** by default:
+
+- **Main clip**: someone talking, with sound, in a consistent camera and format.
+- **B-roll**: short, little or no speech, or clearly a different source. Names
+  like `broll`, `cutaway`, or a subfolder name add weight.
+- **Retake**: covers the same lines as another main clip (compare transcripts;
+  transcribe each clip on its own first when there are several). Keep the **last
+  complete take**, mark earlier ones `retake` in `sources.json`. Never delete them.
+
+**Order** of main clips: descriptive names first (`1-intro`, `part-2`, …), then
+recording time (`recordedAt`), then the camera's file numbering. Use the
+transcripts only to break ties or catch something clearly out of place (an
+"in this video…" opening recorded last).
+
+**Format.** The active profile decides the output format. Clips that don't match
+are fitted (step 2). Only if most of the main footage doesn't match, ask the usual
+"Switch to `<name>` for this?" from step 4.
+
+**How much to ask:**
+
+- **One new video**: no questions. Just edit it.
+- **Several, and the roles and order are clear**: state the plan in one line and
+  keep going, e.g. "Joining `intro.mp4` → `main.mp4`, `beach.mp4` as b-roll,
+  dropped `IMG_0615` as a retake." The user can correct it in their notes.
+- **Several, and something is unclear** (order can't be told, roles conflict,
+  takes differ a lot): send **one** message with your full proposed plan and mark
+  the unclear parts, so "go" or a single correction settles it. Ask at most once,
+  then proceed.
 
 ## Notes and rules
 
