@@ -1,11 +1,11 @@
-# Installing ai-video-editor (instructions for agents)
+# Installing direk-ai (instructions for agents)
 
 You were asked to install or set up this repo. Cloning is not enough: finish every
 step below. Do the work yourself, and only stop to ask the user for approvals and choices.
 
-1. Clone https://github.com/codegino/ai-video-editor into a folder called
-   `ai-video-editor` (skip if already cloned) and move into it.
-2. Read `AGENTS.md` and `.agents/skills/video-editor/SKILL.md`, and follow that skill.
+1. Clone https://github.com/codegino/direk-ai into a folder called
+   `direk-ai` (skip if already cloned) and move into it.
+2. Read `AGENTS.md` and `.agents/skills/direk-ai/SKILL.md`, and follow that skill.
 3. Make sure every dependency is installed before going further:
    - Node.js 22 or newer, Git, FFmpeg (including ffprobe), and Google Chrome.
    - Install anything missing with the system's package manager
@@ -30,4 +30,4 @@ step below. Do the work yourself, and only stop to ask the user for approvals an
 6. Open `output/setup-test.mp4` for the user (`open` on macOS, `start ""` on Windows,
    `xdg-open` on Linux), then run the skill's profile setup to ask about their style.
 7. Tell the user to open their agent in this folder from now on so it finds the
-   `video-editor` skill.
+   `direk-ai` skill.

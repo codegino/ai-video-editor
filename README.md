@@ -1,6 +1,6 @@
-# ai-video-editor
+# direk-ai
 
-Your own AI video editor, living inside the coding agent you already use (Claude Code,
+Your own AI video editor ("Direk" is Filipino for director), living inside the coding agent you already use (Claude Code,
 Codex, Cursor, Gemini CLI, GitHub Copilot, Windsurf, or anything that reads
 [Agent Skills](https://agentskills.io)).
 
@@ -15,7 +15,7 @@ handles non-English and mixed-language speech well. A fully local option is ther
 ## Setup
 
 Clone the repo, open the folder in your agent, and say **`start`**. Or just tell your
-agent: "install https://github.com/codegino/ai-video-editor".
+agent: "install https://github.com/codegino/direk-ai".
 
 The agent installs whatever is missing (see [Requirements](#requirements)), downloads
 the editing engine, renders a test clip, helps you pick a transcription route, and
@@ -26,10 +26,23 @@ asks a few questions to build your profile. Agents follow [INSTALL.md](INSTALL.m
 1. Put a video in `input/`, or drag it into the chat. Several clips are fine: they
    are joined in recording order, retakes are dropped, and extra clips, images and
    audio are used where they fit. No subfolders needed.
-2. Say **"edit this"** (or `/video-editor`, or `$video-editor` in Codex).
+2. Say **"edit this"** (or `/direk-ai`, or `$direk-ai` in Codex).
 3. Watch the draft in `output/`, give notes, repeat. Say **"final"** when done.
 
 Want a YouTube version? Ask for horizontal. It gets its own framing, not a crop.
+
+### Talk to Direk AI while you record
+
+Say **"Direk AI"** and an instruction, in any language, and keep filming. The editor
+finds these in the transcript, does what you asked at that moment, and cuts the
+command out of the video:
+
+- "Direk AI, cut that, I'll say it again"
+- "Direk AI, put a title card at the bottom: three tips for better audio"
+- "Direk AI, show the beach clip in the upper right"
+
+There is no fixed command list. If it can't tell what you meant, it asks once before
+rendering. The draft summary lists every command and what was done.
 
 ## Folders
 
@@ -40,7 +53,7 @@ profile/            you: style, rules, vocabulary, intro, outro, logo (the activ
 profiles/           your saved profiles, one folder each (managed for you)
 profile.example/    templates for every profile file
 engine/             the editing engine, installed by setup (do not edit)
-tools/              transcription, input listing and profile scripts
+tools/              transcription, input listing, Direk AI command and profile scripts
 ```
 
 `input/`, `output/`, `profile/`, `profiles/` and `.env` stay on your computer and are never committed.

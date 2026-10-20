@@ -6,7 +6,7 @@
  *   "Direk AI, cut that, I'll say it again"
  *   "Direk AI, put a title card at the bottom"
  * This script only finds them. Interpreting each command is the editor's job
- * (see the "Direk AI commands" section of the video-editor skill).
+ * (see the "Direk AI commands" section of the direk-ai skill).
  *
  * For each cue it reports:
  *   heard     the wake phrase as transcribed ("Direk AI", "direct AI", ...)
