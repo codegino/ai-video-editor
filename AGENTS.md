@@ -6,3 +6,15 @@ All work here follows the `video-editor` skill at `.agents/skills/video-editor/S
 If it is not loaded yet, read it before acting on "start", "edit this", a new video in
 `input/`, notes on a draft, or anything about the user's profile (style, rules,
 vocabulary, intro, outro).
+
+## Installing
+
+If the user asks to install, set up, or try this repo (for example "install this
+<repo URL>"), cloning is not enough. Treat it as "start" and finish the full setup:
+
+1. Install every dependency: Node.js 22+, Git, FFmpeg (with ffprobe), and Chrome.
+2. Run `node setup.mjs` from the repo root until it prints `SETUP DONE`.
+3. Get a transcription route working (Groq key in `.env`, or local faster-whisper).
+4. Show the test render and run profile setup.
+
+The detailed steps are in `INSTALL.md`. Only stop to ask the user for approvals and choices.

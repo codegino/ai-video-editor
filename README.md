@@ -14,21 +14,12 @@ handles non-English and mixed-language speech well. A fully local option is ther
 
 ## Setup
 
-Paste this into your agent:
+Clone the repo, open the folder in your agent, and say **`start`**. Or just tell your
+agent: "install https://github.com/codegino/ai-video-editor".
 
-```
-Clone https://github.com/codegino/ai-video-editor into a folder called ai-video-editor,
-move into it, read AGENTS.md and .agents/skills/video-editor/SKILL.md,
-then run the skill's first-time setup ("start").
-```
-
-Or do it by hand: clone this repo, open the folder in your agent, and type **`start`**.
-
-The agent checks your tools, installs the editing engine, renders a test clip, helps you
-pick a transcription route, and asks a few questions to build your profile: format,
-captions, pace, an optional intro and outro, and words Whisper should spell your way.
-
-Open your agent in this folder from then on so it finds the `video-editor` skill.
+The agent installs whatever is missing (see [Requirements](#requirements)), downloads
+the editing engine, renders a test clip, helps you pick a transcription route, and
+asks a few questions to build your profile. Agents follow [INSTALL.md](INSTALL.md).
 
 ## Editing
 
