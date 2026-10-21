@@ -7,6 +7,12 @@ If it is not loaded yet, read it before acting on "start", "edit this", a new vi
 `input/`, notes on a draft, or anything about the user's profile (style, rules,
 vocabulary, intro, outro).
 
+For anything about saving, switching, creating, renaming, deleting or restoring
+profiles, read the `profile-manager` skill at `.agents/skills/profile-manager/SKILL.md`.
+
+Read these files directly; do not rely on your agent having auto-loaded them as
+skills. (`CLAUDE.md` only imports this file for Claude Code.)
+
 ## Installing
 
 If the user asks to install, set up, or try this repo (for example "install this

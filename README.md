@@ -1,8 +1,8 @@
 # direk-ai
 
 Your own AI video editor ("Direk" is Filipino for director), living inside the coding agent you already use (Claude Code,
-Codex, Cursor, Gemini CLI, GitHub Copilot, Windsurf, or anything that reads
-[Agent Skills](https://agentskills.io)).
+Codex, Cursor, GitHub Copilot, Windsurf, pi, or anything that reads `AGENTS.md` or
+[Agent Skills](https://agentskills.io) in `.agents/skills/`).
 
 Record yourself, drop the file in `input/`, and say **"edit this"**. You get a cut,
 captioned draft with motion graphics, zooms and sound. Reply with notes in plain
@@ -26,7 +26,8 @@ asks a few questions to build your profile. Agents follow [INSTALL.md](INSTALL.m
 1. Put a video in `input/`, or drag it into the chat. Several clips are fine: they
    are joined in recording order, retakes are dropped, and extra clips, images and
    audio are used where they fit. No subfolders needed.
-2. Say **"edit this"** (or `/direk-ai`, or `$direk-ai` in Codex).
+2. Say **"edit this"**. Agents that load skills from `.agents/skills/` can also
+   invoke it directly (for example `$direk-ai` in Codex).
 3. Watch the draft in `output/`, give notes, repeat. Say **"final"** when done.
 
 Want a YouTube version? Ask for horizontal. It gets its own framing, not a crop.

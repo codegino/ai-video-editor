@@ -29,5 +29,5 @@ step below. Do the work yourself, and only stop to ask the user for approvals an
    Rerun `node setup.mjs` and confirm it reports a working transcription route.
 6. Open `output/setup-test.mp4` for the user (`open` on macOS, `start ""` on Windows,
    `xdg-open` on Linux), then run the skill's profile setup to ask about their style.
-7. Tell the user to open their agent in this folder from now on so it finds the
-   `direk-ai` skill.
+7. Tell the user to open their agent in this folder from now on, so it loads
+   `AGENTS.md` (Claude Code loads it through `CLAUDE.md`) and the `direk-ai` skill.
