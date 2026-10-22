@@ -1,4 +1,4 @@
-# direk-ai
+# Direk A.I.
 
 Your own AI video editor ("Direk" is Filipino for director), living inside the coding agent you already use (Claude Code,
 Codex, Cursor, GitHub Copilot, Windsurf, pi, or anything that reads `AGENTS.md` or
