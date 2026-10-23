@@ -1,6 +1,6 @@
 ---
 name: off-limits-check
-description: Check what the user says in a video against their off-limits topics (profile/off-limits.md) and warn them about anything that crosses a line. Use when the user says "check this video", "is this okay to post", "anything off-limits in here", or wants to add, change or remove an off-limits topic ("add politics to my off-limits", "don't flag religion anymore"). Also called by direk-ai right after transcription in every "edit this".
+description: Check what the user says in a video against their off-limits topics (profile/off-limits.md) and warn them about anything that crosses a line. Use when the user says "check this video", "check my script", "check for red topics", "is this okay to post", "anything off-limits in here", or wants to add, change or remove an off-limits topic ("add politics to my off-limits", "don't flag religion anymore"). Also called by direk-ai right after transcription in every "edit this".
 ---
 
 # off-limits-check
@@ -78,7 +78,15 @@ summary, repeat it in one line ("2 off-limits flags, see above") and offer to cu
 them in the next version. If the user says to cut one, it is a normal note on the
 draft: rebuild the next version from the project without that part.
 
-## "check this video" (no edit)
+## "check this video" / "check my script" (no edit)
+
+Pick what to check without asking:
+
+- A script or text pasted/attached in chat: check that text directly (no times).
+- A video path given: check that video.
+- Nothing given (any wording: "check my script", "check for red topics", …):
+  auto-transcribe the video(s) in `input/` and check them. If there are several,
+  check each, newest first. Only ask if `input/` has no video.
 
 Transcribe without leaving anything in `input/` or `output/`:
 
