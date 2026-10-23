@@ -170,7 +170,8 @@ approval between steps. Only stop to ask about paid or uploading services.
    (add `--local` if `.env` has no Groq key). This produces `raw.json` and takes the
    place of the engine's ElevenLabs step. Then run
    `node tools/cues.mjs engine/video-projects/<slug>/assets/raw.json` and handle any
-   commands as **Direk AI commands** below describes.
+   commands as **Direk AI commands** below describes. Then follow
+   `.agents/skills/off-limits-check/SKILL.md` on `raw.json`.
 4. **Load preferences.** Run `node tools/profile.mjs list` and tell the user in one
    line which profile you are using ("Editing with profile `default`."). If the
    request clearly fits another profile better (for example, a YouTube or
